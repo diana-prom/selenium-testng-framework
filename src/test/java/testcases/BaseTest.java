@@ -10,13 +10,13 @@ import pageobjects.SignupPage;
 
 public class BaseTest {
 
+    private String chromeDriverKey = "webdriver.chrome.driver";
+    private String chromeDriverPath = "/Users/dianatinajero/IdeaProjects/SeleniumProject/src/test/resources/executables/chromedriver";
     public ChromeDriver driver;
     public ChromeOptions options;
     HomePage homePage;
     LoginPage loginPage;
     SignupPage signupPage;
-    private String chromeDriverKey = "webdriver.chrome.driver";
-    private String chromeDriverPath = "/Users/dianatinajero/IdeaProjects/SeleniumProject/src/test/resources/executables/chromedriver";
 
     @BeforeMethod
     public void setUp() {

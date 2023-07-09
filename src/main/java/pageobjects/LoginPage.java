@@ -6,11 +6,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class LoginPage extends BaseMain {
     public LoginPage(ChromeDriver driver) {
+
         super(driver);
     }
 
     public String loginUrl = "https://test.my-fork.com/login";
-    //Login page locators
     private By emailInputField = By.xpath("//input[@id='email']");
     private By passInputField = By.xpath("//input[@id='password']");
     public By loginButton = By.xpath("//button[contains(text(),'Log In')]");
@@ -20,6 +20,7 @@ public class LoginPage extends BaseMain {
 
 
     public void open() {
+
         driver.get(loginUrl);
     }
 
