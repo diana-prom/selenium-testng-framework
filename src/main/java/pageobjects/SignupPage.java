@@ -36,7 +36,9 @@ public class SignupPage extends BaseMain {
         //Captures every item in the 'options' list
         options = jobDropdown.getOptions();
         for (int i = 0; i < options.size(); i++) {
-            jobsList.add(options.get(i).getText());
+            if(options.get(i).getText() != ""){
+                jobsList.add(options.get(i).getText());
+            }
         }
         return jobsList;
     }
