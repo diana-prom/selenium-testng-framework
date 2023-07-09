@@ -6,6 +6,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import pageobjects.HomePage;
 import pageobjects.LoginPage;
+import pageobjects.SignupPage;
 
 public class BaseTest {
 
@@ -13,6 +14,7 @@ public class BaseTest {
     public ChromeOptions options;
     HomePage homePage;
     LoginPage loginPage;
+    SignupPage signupPage;
     private String chromeDriverKey = "webdriver.chrome.driver";
     private String chromeDriverPath = "/Users/dianatinajero/IdeaProjects/SeleniumProject/src/test/resources/executables/chromedriver";
 
@@ -24,6 +26,7 @@ public class BaseTest {
         driver.manage().window().maximize();
         homePage = new HomePage(driver);
         loginPage = new LoginPage(driver);
+        signupPage = new SignupPage(driver);
     }
 
 
