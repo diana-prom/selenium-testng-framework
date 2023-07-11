@@ -10,7 +10,7 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void validateLoginInputFieldsAndButton() {
-        super.loginPage.open();
+        loginPage.open();
         boolean inputFieldsAndButton = loginPage.loginInputFieldsExist();
         if (inputFieldsAndButton) {
             System.out.println("Email field, Password field and Login button are displayed on Sign In page");
@@ -22,14 +22,14 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void enterInvalidLoginCredentials() {
-        super.loginPage.open();
+        loginPage.open();
         loginPage.enterCredentials(validEmail, incorrectPassword);
         loginPage.submitCredentials();
     }
 
     @Test
     public void findsErrorMessageAfterFailedLogin() throws InterruptedException {
-        super.loginPage.open();
+        loginPage.open();
         loginPage.enterCredentials(validEmail, incorrectPassword);
         loginPage.submitCredentials();
         Thread.sleep(4000);
@@ -39,7 +39,7 @@ public class LoginTest extends BaseTest {
 
     @Test
     public void validateCheckboxIsSelectedByDefault() {
-        super.loginPage.open();
+        loginPage.open();
         boolean isRememberMeSelected = loginPage.checkboxIsSelected();
         if (isRememberMeSelected) {
             System.out.println("Remember me checkbox is checked by default");
@@ -48,6 +48,5 @@ public class LoginTest extends BaseTest {
         }
 
     }
-
 
 }
