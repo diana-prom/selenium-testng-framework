@@ -1,8 +1,10 @@
 package testcases;
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
-import pageobjects.LoginPage;
+
+import java.time.Duration;
 
 public class LoginTest extends BaseTest {
     private String validEmail = "random@email.com";
@@ -28,11 +30,12 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
-    public void findsErrorMessageAfterFailedLogin() throws InterruptedException {
+    public void findsErrorMessageAfterFailedLogin() {
         loginPage.open();
         loginPage.enterCredentials(validEmail, incorrectPassword);
         loginPage.submitCredentials();
-        Thread.sleep(4000);
+        WebDriverWait waitForErrorToLoad = new WebDriverWait(driver, Duration.ofSeconds(10));
+        waitForErrorToLoad.until(ExpectedConditions.visibilityOfElementLocated(loginPage.incorrectEmailError));
         String message = loginPage.incorrectEmailMsg();
         System.out.println("Unable to log in. " + message);
     }

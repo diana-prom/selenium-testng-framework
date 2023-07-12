@@ -8,6 +8,8 @@ import pageobjects.HomePage;
 import pageobjects.LoginPage;
 import pageobjects.SignupPage;
 
+import java.time.Duration;
+
 public class BaseTest {
 
     private String chromeDriverKey = "webdriver.chrome.driver";
@@ -24,6 +26,7 @@ public class BaseTest {
         options = new ChromeOptions();
         driver = new ChromeDriver(options);
         driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(25));
         homePage = new HomePage(driver);
         loginPage = new LoginPage(driver);
         signupPage = new SignupPage(driver);
