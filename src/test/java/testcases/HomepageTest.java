@@ -6,7 +6,7 @@ public class HomepageTest extends BaseTest {
 
     @Test
     public void gotoMainPage() {
-        super.homePage.open();
+        homePage.open();
         boolean logo = homePage.logoLoaded();
         boolean galleryLink = homePage.galleryLinkLoaded();
         boolean buttons = homePage.buttonsLoaded();
@@ -28,7 +28,7 @@ public class HomepageTest extends BaseTest {
 
     @Test
     public void goToSignInPage() {
-        super.homePage.open();
+        homePage.open();
         homePage.clickSignInBtn();
         boolean isLoginFields = loginPage.loginInputFieldsExist();
         if (isLoginFields == true) {

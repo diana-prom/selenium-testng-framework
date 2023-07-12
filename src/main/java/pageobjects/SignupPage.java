@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class SignupPage extends BaseMain {
@@ -20,6 +21,7 @@ public class SignupPage extends BaseMain {
     }
 
     public By jobTitleDropdown = By.id("job-title");
+
 
     public List<String> getDropdown() {
         //declared variable of WebElement type
@@ -36,9 +38,7 @@ public class SignupPage extends BaseMain {
         //Captures every item in the 'options' list
         options = jobDropdown.getOptions();
         for (int i = 0; i < options.size(); i++) {
-            if(options.get(i).getText() != ""){
-                jobsList.add(options.get(i).getText());
-            }
+            jobsList.add(options.get(i).getText());
         }
         return jobsList;
     }
