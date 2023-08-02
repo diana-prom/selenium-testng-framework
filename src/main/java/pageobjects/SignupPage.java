@@ -6,7 +6,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SignupPage extends BaseMain {
@@ -15,12 +14,14 @@ public class SignupPage extends BaseMain {
     }
 
     public String signupUrl = "https://test.my-fork.com/register";
+    public String expectedSignupPageTitle = "Sign Up";
+    public By header = By.xpath("//div[contains (text(),'Sign Up')]");
+    public By loginLink = By.xpath("//a[contains(text(),'Log In')]");
+    public By jobTitleDropdown = By.id("job-title");
 
     public void open() {
         driver.get(signupUrl);
     }
-
-    public By jobTitleDropdown = By.id("job-title");
 
 
     public List<String> getDropdown() {
@@ -43,4 +44,51 @@ public class SignupPage extends BaseMain {
         return jobsList;
     }
 
+    public String headerName() {
+        return header.toString();
+    }
+
+    public boolean isHeaderDisplayed() {
+        return driver.findElement(header).isDisplayed();
+    }
+
+    public boolean loginLinkIsPresent() {
+
+        return driver.findElement(loginLink).isDisplayed();
+    }
+
+    public String actualLoginLInk() {
+        return driver.findElement(loginLink).getAttribute("href");
+
+    }
+
+    public List<WebElement> getAllLinks() {
+        List<WebElement> links = driver.findElements(By.tagName("a"));
+        return links;
+    }
+
+    public int numberOfLinks() {
+        return getAllLinks().size();
+    }
+
+    public void linkNames() {
+
+        for (int i = 0; i < getAllLinks().size(); i = i + 1) {
+            System.out.println("Link name  #" + i + ": " + getAllLinks().get(i).getText() + " - " + getAllLinks().get(i).getAttribute("href"));
+        }
+
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
