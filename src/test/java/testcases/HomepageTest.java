@@ -4,7 +4,8 @@ import org.testng.annotations.Test;
 
 public class HomepageTest extends BaseTest {
 
-    @Test
+
+    @Test(priority = 0, groups = {"Smoke"})
     public void gotoMainPage() {
         homePage.open();
         boolean logo = homePage.logoLoaded();
@@ -26,7 +27,8 @@ public class HomepageTest extends BaseTest {
         }
     }
 
-    @Test
+
+    @Test(priority = 1, groups = "Smoke")
     public void goToSignInPage() {
         homePage.open();
         homePage.clickSignInBtn();
@@ -37,5 +39,7 @@ public class HomepageTest extends BaseTest {
             System.out.println("Failed to open Sign In Page");
         }
     }
+
+
 
 }

@@ -20,7 +20,7 @@ public class BaseTest {
     LoginPage loginPage;
     SignupPage signupPage;
 
-    @BeforeMethod
+    @BeforeMethod(groups = {"Smoke", "Acceptance", "Functional", "Regression"}, alwaysRun = true)
     public void setUp() {
         System.setProperty(chromeDriverKey, chromeDriverPath);
         options = new ChromeOptions();
@@ -33,7 +33,7 @@ public class BaseTest {
     }
 
 
-    @AfterMethod
+    @AfterMethod(groups = {"Smoke", "Acceptance", "Functional", "Regression"}, alwaysRun = true)
     public void TearDown() {
         if (driver != null) {
             driver.quit();

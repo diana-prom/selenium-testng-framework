@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 public class HardAssertions extends BaseTest {
 
 
-    @Test
+    @Test(groups = {"Acceptance"})
     public void signupPageLoadedPerRequirements() {
         signupPage.open();
         //assert page title is correct

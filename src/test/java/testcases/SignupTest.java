@@ -6,7 +6,8 @@ import java.util.List;
 
 public class SignupTest extends BaseTest {
 
-    @Test
+
+    @Test(groups = {"Functional", "Regression"})
     public void validateAllSupportedRolesInDropdownList() {
         signupPage.open();
         List<String> jobTitles = signupPage.getDropdown();

@@ -2,15 +2,17 @@ package testcases;
 
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.time.Duration;
+
 
 public class LoginTest extends BaseTest {
     private String validEmail = "random@email.com";
     private String incorrectPassword = "!@df";
 
-    @Test
+    @Test(priority = 2, groups = {"Smoke"})
     public void validateLoginInputFieldsAndButton() {
         loginPage.open();
         boolean inputFieldsAndButton = loginPage.loginInputFieldsExist();
@@ -22,14 +24,14 @@ public class LoginTest extends BaseTest {
 
     }
 
-    @Test
+    @Test(priority = 3, groups = {"Regression"})
     public void enterInvalidLoginCredentials() {
         loginPage.open();
         loginPage.enterCredentials(validEmail, incorrectPassword);
         loginPage.submitCredentials();
     }
 
-    @Test
+    @Test(priority = 4, groups = {"Regression"})
     public void findsErrorMessageAfterFailedLogin() {
         loginPage.open();
         loginPage.enterCredentials(validEmail, incorrectPassword);
@@ -40,7 +42,7 @@ public class LoginTest extends BaseTest {
         System.out.println("Unable to log in. " + message);
     }
 
-    @Test
+    @Test(priority = 1, groups = {"Smoke, Regression"})
     public void validateCheckboxIsSelectedByDefault() {
         loginPage.open();
         boolean isRememberMeSelected = loginPage.checkboxIsSelected();
@@ -51,5 +53,7 @@ public class LoginTest extends BaseTest {
         }
 
     }
+
+
 
 }
