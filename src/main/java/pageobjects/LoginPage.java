@@ -30,9 +30,16 @@ public class LoginPage extends BaseMain {
 
     }
 
+
     public void submitCredentials() {
         driver.findElement(loginButton).isDisplayed();
         driver.findElement(loginButton).click();
+    }
+
+    public void userLogsIn(String correctEmail, String correctPassword) {
+        driver.findElement(emailInputField).sendKeys(correctEmail);
+        driver.findElement(passInputField).sendKeys(correctPassword);
+        submitCredentials();
     }
 
     public boolean loginInputFieldsExist() {
