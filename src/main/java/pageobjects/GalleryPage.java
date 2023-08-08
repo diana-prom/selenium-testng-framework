@@ -7,25 +7,26 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class GalleryPage extends BaseMain {
     public String galleryUrl = "https://test.my-fork.com/quizzes-list";
     public By expertise = By.xpath("//*[@id='app']/div[2]/div[2]/div");
-    public By historyLink = By.xpath("//a[contains(text(),'History')]");
-    public By basicQuizTotal = By.xpath("//span[contains(text(),'SQL 101 (Basics)')]/../../../div[2]/div[1]");
-    public By getBasicQuizStartButton = By.xpath("//body/div[@id='app']/div[2]/div[3]/div[2]/div[2]/a[1]/div[1]");
-    public By progressData = By.xpath("//div[@id= 'quiz-process-progress-data']");
-    public By answeredQuestion = By.xpath("//div[contains(@class,'answered')]");
-    public By selectedAnswerFromQuestionContainer = By.xpath("//div[contains(@class,'answers-block-item active')]");
-    public By questions = By.xpath("//div[contains(text(),'SQL 101 (Basics)')]/../div/div");
-    public By firstQuestion = By.xpath("//div[@data-answer-id='0']");
-    public By nextButton = By.xpath("//div[contains(text(),'Next')]");
+    public String historyLink = "//a[contains(text(),'History')]";
+    public String basicQuizTotal = "//span[contains(text(),'SQL 101 (Basics)')]/../../../div[2]/div[1]";
+    public String getBasicQuizStartButton = "//body/div[@id='app']/div[2]/div[3]/div[2]/div[2]/a[1]/div[1]";
+    public String progressData = "//div[@id= 'quiz-process-progress-data']";
+    public String answeredQuestion = "//div[contains(@class,'answered')]";
+    public String selectedAnswerFromQuestionContainer = "//div[contains(@class,'answers-block-item active')]";
+    public String questions = "//div[contains(text(),'SQL 101 (Basics)')]/../div/div";
+    public String firstAnswer = "//div[@data-answer-id='0']";
+    public String nextButton = "//div[contains(text(),'Next')]";
     public By homePageLink = By.xpath("//img[@id='logo']");
     public String previousProgressData = "";
     public int questionsCounter = 0;
 
-    public GalleryPage(ChromeDriver driver) {
-        super(driver);
+    public GalleryPage(ChromeDriver driver, Logger log) {
+        super(driver, log);
     }
 
     public void open() {
@@ -34,13 +35,14 @@ public class GalleryPage extends BaseMain {
 
     public boolean isHistoryPresent() {
         try {
-            return driver.findElement(historyLink).isDisplayed();
+            return isDisplayedUsingXpath(historyLink, "history link");
         } catch (NoSuchElementException e) {
             return false;
         }
     }
 
     public void returnToHomePage() {
+
         driver.findElement(homePageLink).click();
     }
 
@@ -54,22 +56,22 @@ public class GalleryPage extends BaseMain {
     }
 
     public String getGrandTotalFromBasicQuiz() {
-        String quizTotal = driver.findElement(basicQuizTotal).getText();
+        String quizTotal = getHeaderTextUsingXpath(basicQuizTotal, "Total number of answers over Total number of questions");
 
         String[] arrOfStr = quizTotal.split("/");
         return arrOfStr[1];
     }
 
     public void startBasicQuiz() {
-        driver.findElement(getBasicQuizStartButton).click();
+        clickUsingXpath(getBasicQuizStartButton, "Start button for the Basic Quiz");
     }
 
     public void selectFirstQuestion() {
-        driver.findElement(firstQuestion).click();
+        clickUsingXpath(firstAnswer, "First answer");
     }
 
     public String displayedProgress() {
-        String data = driver.findElement(progressData).getText();
+        String data = getHeaderTextUsingXpath(progressData, "Progress data");
 
         String[] arrOfStr = data.split("%");
         return arrOfStr[0];
@@ -78,7 +80,8 @@ public class GalleryPage extends BaseMain {
 
     public String getProgressData() {
 
-        int totalQuestions = driver.findElements(questions).size();
+        int totalQuestions = getListSize(questions, "total number of questions");
+
         int totalAnsweredQuestions = getNumberOfAnsweredQuestions();
 
         //(correct value = number of answered questions / total number of questions)
@@ -91,15 +94,15 @@ public class GalleryPage extends BaseMain {
     }
 
     public void clickNextButton() {
-        driver.findElement(nextButton).click();
+        clickUsingXpath(nextButton, "Next button");
     }
 
     public int getNumberOfSelectedAnswers() {
-        return driver.findElements(selectedAnswerFromQuestionContainer).size();
+        return getListSize(selectedAnswerFromQuestionContainer, "total number of selected answers");
     }
 
     public int getNumberOfAnsweredQuestions() {
-        return driver.findElements(answeredQuestion).size();
+        return getListSize(answeredQuestion, "total number of answered questions");
     }
 
     public Boolean isProgressDataCorrect() {
