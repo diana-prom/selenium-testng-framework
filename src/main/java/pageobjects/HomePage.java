@@ -32,6 +32,10 @@ public class HomePage extends BaseMain {
         return galleryLnkExists;
     }
 
+    public void goToGallery() {
+        driver.findElement(galleryLink).click();
+    }
+
     public boolean buttonsLoaded() {
         boolean signInBtnExists = driver.findElement(goToSignInBtn).isDisplayed();
         return signInBtnExists;
