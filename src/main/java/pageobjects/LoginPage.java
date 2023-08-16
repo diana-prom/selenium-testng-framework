@@ -4,16 +4,19 @@ package pageobjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-public class LoginPage extends BaseMain {
-    public LoginPage(ChromeDriver driver) {
+import java.util.List;
+import java.util.logging.Logger;
 
-        super(driver);
+public class LoginPage extends BaseMain {
+    public LoginPage(ChromeDriver driver, Logger log) {
+
+        super(driver, log);
     }
 
     public String loginUrl = "https://test.my-fork.com/login";
-    private By emailInputField = By.xpath("//input[@id='email']");
-    private By passInputField = By.xpath("//input[@id='password']");
-    public By loginButton = By.xpath("//button[contains(text(),'Log In')]");
+    public String emailInputField = "//input[@id='email']";
+    public String passInputField = "//input[@id='password']";
+    public String loginButton = "//button[contains(text(),'Log In')]";
     public By rememberMeCheckbox = By.xpath("//input[@id='auth-page-remember-me']");
     //error messages on login page
     public By incorrectEmailError = By.xpath("//p[contains(text(),'Error: email is incorrect')]");
@@ -24,28 +27,31 @@ public class LoginPage extends BaseMain {
         driver.get(loginUrl);
     }
 
-    public void enterCredentials(String validEmail, String incorrectPassword) {
-        driver.findElement(emailInputField).sendKeys(validEmail);
-        driver.findElement(passInputField).sendKeys(incorrectPassword);
+    public List<Integer> urlVerification() {
+        return verifyLinkActive();
+    }
 
+    public void enterCredentials(String validEmail, String incorrectPassword) {
+        typeUsingXpath(emailInputField, " email input field ", validEmail);
+        typeUsingXpath(passInputField, " password input field ", incorrectPassword);
     }
 
 
     public void submitCredentials() {
-        driver.findElement(loginButton).isDisplayed();
-        driver.findElement(loginButton).click();
+        isDisplayedUsingXpath(loginButton, "login button");
+        clickUsingXpath(loginButton, "login button");
     }
 
     public void userLogsIn(String correctEmail, String correctPassword) {
-        driver.findElement(emailInputField).sendKeys(correctEmail);
-        driver.findElement(passInputField).sendKeys(correctPassword);
+        typeUsingXpath(emailInputField, " email input field ", correctEmail);
+        typeUsingXpath(passInputField, " password input field ", correctPassword);
         submitCredentials();
     }
 
     public boolean loginInputFieldsExist() {
-        boolean emailInput = driver.findElement(emailInputField).isDisplayed();
-        boolean passwordInput = driver.findElement(passInputField).isDisplayed();
-        boolean loginBtn = driver.findElement(loginButton).isDisplayed();
+        boolean emailInput = isDisplayedUsingXpath(emailInputField, "email input field");
+        boolean passwordInput = isDisplayedUsingXpath(passInputField, "password input field");
+        boolean loginBtn = isDisplayedUsingXpath(loginButton, "login button");
         return emailInput && passwordInput && loginBtn;
     }
 

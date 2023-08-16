@@ -4,13 +4,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class SignupPage extends BaseMain {
-    public SignupPage(ChromeDriver driver) {
-        super(driver);
+    public SignupPage(ChromeDriver driver, Logger log) {
+        super(driver, log);
     }
 
     public String signupUrl = "https://test.my-fork.com/register";
@@ -78,17 +80,8 @@ public class SignupPage extends BaseMain {
         }
 
     }
+
+    public List<Integer> urlVerification() {
+        return verifyLinkActive();
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

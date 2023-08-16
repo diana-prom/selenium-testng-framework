@@ -1,6 +1,10 @@
 package testcases;
 
+import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
+import java.util.List;
 
 public class HomepageTest extends BaseTest {
 
@@ -8,7 +12,7 @@ public class HomepageTest extends BaseTest {
     @Test(priority = 0, groups = {"Smoke"})
     public void gotoMainPage() {
         homePage.open();
-        boolean logo = homePage.logoLoaded();
+     /*   boolean logo = homePage.logoLoaded();
         boolean galleryLink = homePage.galleryLinkLoaded();
         boolean buttons = homePage.buttonsLoaded();
 
@@ -25,6 +29,15 @@ public class HomepageTest extends BaseTest {
         if (logo && galleryLink && buttons) {
             System.out.println("Landing page loaded successfully");
         }
+        */
+        SoftAssert softAssert = new SoftAssert();
+        Integer expected = 200;
+        List<Integer> codes = homePage.urlVerification();
+        System.out.println(codes);
+        for (Integer code : codes) {
+            softAssert.assertEquals(code, expected);
+        }
+        softAssert.assertAll();
     }
 
 
@@ -39,7 +52,6 @@ public class HomepageTest extends BaseTest {
             System.out.println("Failed to open Sign In Page");
         }
     }
-
 
 
 }

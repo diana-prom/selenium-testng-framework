@@ -3,9 +3,12 @@ package pageobjects;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.util.List;
+import java.util.logging.Logger;
+
 public class HomePage extends BaseMain {
-    public HomePage(ChromeDriver driver) {
-        super(driver);
+    public HomePage(ChromeDriver driver, Logger log) {
+        super(driver, log);
     }
 
     public String mainUrl = "https://test.my-fork.com/";
@@ -18,9 +21,14 @@ public class HomePage extends BaseMain {
         driver.get(mainUrl);
     }
 
+    public List<Integer> urlVerification() {
+        return verifyLinkActive();
+    }
+
     public void clickSignInBtn() {
         driver.findElement(goToSignInBtn).click();
     }
+
 
     public boolean logoLoaded() {
         boolean logoExists = driver.findElement(logo).isDisplayed();
