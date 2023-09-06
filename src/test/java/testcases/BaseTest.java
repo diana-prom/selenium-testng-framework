@@ -4,10 +4,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import pageobjects.GalleryPage;
-import pageobjects.HomePage;
-import pageobjects.LoginPage;
-import pageobjects.SignupPage;
+import pageobjects.*;
+import pageobjects.StudyPage;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -25,6 +23,7 @@ public class BaseTest {
     HomePage homePage;
     LoginPage loginPage;
     SignupPage signupPage;
+    StudyPage studyPage;
     GalleryPage courseGalleryPage;
 
     @BeforeMethod(groups = {"Smoke", "Acceptance", "Functional", "Regression"}, alwaysRun = true)
@@ -39,6 +38,7 @@ public class BaseTest {
         homePage = new HomePage(driver, log);
         loginPage = new LoginPage(driver, log);
         signupPage = new SignupPage(driver, log);
+        studyPage = new StudyPage(driver, log);
         courseGalleryPage = new GalleryPage(driver, log);
     }
 
