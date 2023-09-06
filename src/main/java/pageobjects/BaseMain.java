@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -58,6 +59,14 @@ public class BaseMain {
     public void windowHandling(int tab) {
         List<String> tabHandler = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabHandler.get(tab));
+    }
+    public void validateIntWithAssertEqual(int actualValue, int expectedValue) {
+        Assert.assertEquals(actualValue, expectedValue);
+        log.info("Validation passed successfully. Integer values are the same");
+    }
+    public void validateListOfStringWithAssertEqual(List<String> actualValue, List<String> expectedValue, String errorMessage) {
+        Assert.assertEquals(actualValue, expectedValue, errorMessage);
+        log.info("Validation passed successfully. Lists are equal");
     }
 
     public void scrollWindow(int pixels) {
