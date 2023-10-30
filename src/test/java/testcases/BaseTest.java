@@ -2,8 +2,8 @@ package testcases;
 
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.testng.annotations.*;
 import pageobjects.*;
 import pageobjects.StudyPage;
 
@@ -15,9 +15,11 @@ import java.util.logging.SimpleFormatter;
 
 public class BaseTest {
 
+    RemoteWebDriver driver;
     private String chromeDriverKey = "webdriver.chrome.driver";
     private String chromeDriverPath = "/Users/dianatinajero/IdeaProjects/SeleniumProject/src/test/resources/executables/chromedriver";
-    public ChromeDriver driver;
+    private String firefoxDriverKey = "webdriver.gecko.driver";
+    private String firefoxDriverPath = "/Users/dianatinajero/IdeaProjects/SeleniumProject/src/test/resources/executables/geckodriver";
     public Logger log;
     public ChromeOptions options;
     HomePage homePage;
@@ -26,7 +28,9 @@ public class BaseTest {
     StudyPage studyPage;
     GalleryPage courseGalleryPage;
 
+
     @BeforeMethod(groups = {"Smoke", "Acceptance", "Functional", "Regression"}, alwaysRun = true)
+    // @Parameters("browser")
     public void setUp() throws IOException {
         System.setProperty(chromeDriverKey, chromeDriverPath);
         options = new ChromeOptions();
@@ -48,6 +52,11 @@ public class BaseTest {
         if (driver != null) {
             driver.quit();
         }
+    }
+
+    @DataProvider(name = "LoginInfo")
+    public static Object[][] getUserDataAndPageTitleName() throws IOException {
+        return BaseMain.getTestData("LoginInfo.csv", 3);
     }
 
     public void saveLogs(Logger log) throws IOException {

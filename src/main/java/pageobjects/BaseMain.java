@@ -2,8 +2,14 @@ package pageobjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import org.testng.Assert;
 
 import java.net.HttpURLConnection;
@@ -15,13 +21,13 @@ import java.util.logging.Logger;
 
 public class BaseMain {
 
-    public ChromeDriver driver;
+    public WebDriver driver;
     public Logger log;
 
     public int tab;
     public int pixels;
 
-    public BaseMain(ChromeDriver driver, Logger logger) {
+    public BaseMain(WebDriver driver, Logger logger) {
 
         this.driver = driver;
         this.log = logger;
@@ -60,10 +66,12 @@ public class BaseMain {
         List<String> tabHandler = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabHandler.get(tab));
     }
+
     public void validateIntWithAssertEqual(int actualValue, int expectedValue) {
         Assert.assertEquals(actualValue, expectedValue);
         log.info("Validation passed successfully. Integer values are the same");
     }
+
     public void validateListOfStringWithAssertEqual(List<String> actualValue, List<String> expectedValue, String errorMessage) {
         Assert.assertEquals(actualValue, expectedValue, errorMessage);
         log.info("Validation passed successfully. Lists are equal");
@@ -103,5 +111,21 @@ public class BaseMain {
         return codes; //a return of a list with codes for further verification
     }
 
+    public static Object[][] getTestData(String fileName, int numberOfElements) throws IOException {
+        ArrayList<Object> out = new ArrayList<>();
+        Files.readAllLines(Paths.get(fileName)).forEach(s -> {
+            String[] data = s.split(",");
+            if (numberOfElements == 1) {
+                out.add(new Object[]{data[0]});
+            } else if (numberOfElements == 2) {
+                out.add(new Object[]{data[0], data[1]});
+            } else if (numberOfElements == 3) {
+                out.add(new Object[]{data[0], data[1], data[2]});
+            } else if (numberOfElements == 4) {
+                out.add(new Object[]{data[0], data[1], data[2], data[3]});
+            }
+        });
+        return out.toArray(new Object[out.size()][]);
+    }
 
 }

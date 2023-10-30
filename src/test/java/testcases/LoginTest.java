@@ -4,15 +4,27 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.time.Duration;
+import java.util.List;
 
 
 public class LoginTest extends BaseTest {
     private String validEmail = "random@email.com";
     private String incorrectPassword = "!@df";
 
-    @Test(priority = 2, groups = {"Smoke"})
+
+    @Test(priority = 0, dataProvider = "LoginInfo", groups = {"Regression"})
+    public void Login(String email, String password, String isButtonDisplayed) throws InterruptedException{
+        loginPage.open();
+        loginPage.enterCredentials(email, password);
+        boolean expected = Boolean.parseBoolean(isButtonDisplayed);
+        Assert.assertEquals(loginPage.loginButtonExists(), expected);
+        loginPage.submitCredentials();
+    }
+
+    @Test(priority = 3, groups = {"Smoke"})
     public void validateLoginInputFieldsAndButton() {
         loginPage.open();
         boolean inputFieldsAndButton = loginPage.loginInputFieldsExist();
@@ -24,14 +36,14 @@ public class LoginTest extends BaseTest {
 
     }
 
-    @Test(priority = 3, groups = {"Regression"})
+    @Test(priority = 4, groups = {"Regression"})
     public void enterInvalidLoginCredentials() {
         loginPage.open();
         loginPage.enterCredentials(validEmail, incorrectPassword);
         loginPage.submitCredentials();
     }
 
-    @Test(priority = 4, groups = {"Regression"})
+    @Test(priority = 5, groups = {"Regression"})
     public void findsErrorMessageAfterFailedLogin() {
         loginPage.open();
         loginPage.enterCredentials(validEmail, incorrectPassword);
@@ -42,7 +54,7 @@ public class LoginTest extends BaseTest {
         System.out.println("Unable to log in. " + message);
     }
 
-    @Test(priority = 1, groups = {"Smoke, Regression"})
+    @Test(priority = 2, groups = {"Smoke, Regression"})
     public void validateCheckboxIsSelectedByDefault() {
         loginPage.open();
         boolean isRememberMeSelected = loginPage.checkboxIsSelected();
@@ -51,9 +63,18 @@ public class LoginTest extends BaseTest {
         } else {
             System.out.println("Remember me checkbox is NOT checked by default");
         }
-
     }
 
-
-
+    @Test(priority = 1, groups = {"Regression"})
+    public void urlVerification() {
+        SoftAssert softAssert = new SoftAssert();
+        Integer expected = 200;
+        loginPage.open();
+        List<Integer> codes = loginPage.urlVerification();
+        System.out.println(codes);
+        for(Integer code: codes){
+            softAssert.assertEquals(code, expected);
+        }
+        softAssert.assertAll();
+    }
 }
